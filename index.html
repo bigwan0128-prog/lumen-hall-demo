@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LUMEN HALL ― 灯の礼拝堂(架空のデモサイト)</title>
+<meta name="description" content="Lumi Designによる架空のウェディング会場の制作デモです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Shippori+Mincho:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3eee4;--fg:#1c2233;--gold:#c9a96a;--sub:rgba(28,34,51,.62);--line:rgba(28,34,51,.18);--night:#0b1020;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;line-height:2;font-size:15px;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:inherit}
+.en{font-family:"Cormorant Garamond","Times New Roman",serif;letter-spacing:.14em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+section{padding:120px 0;position:relative}
+h2{font-weight:400;font-size:clamp(26px,4.6vw,40px);line-height:1.6;letter-spacing:.12em;margin:0 0 28px}
+p{margin:0 0 1.4em;max-width:36em}
+.sub{color:var(--sub)}
+.gold{color:var(--gold)}
+#sky{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 110%,rgba(201,169,106,.22),transparent 60%)}
+/* menu */
+.menubtn{position:fixed;z-index:30;top:max(14px,env(safe-area-inset-top,0px));right:16px;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:rgba(243,238,228,.0);backdrop-filter:blur(8px);color:inherit;cursor:pointer;display:grid;place-items:center}
+.menubtn span{display:block;width:18px;height:1px;background:currentColor;position:relative;transition:.4s}
+.menubtn span::before,.menubtn span::after{content:"";position:absolute;left:0;width:18px;height:1px;background:currentColor;transition:.4s}
+.menubtn span::before{top:-6px}.menubtn span::after{top:6px}
+.menubtn[aria-expanded=true] span{background:transparent}
+.menubtn[aria-expanded=true] span::before{top:0;transform:rotate(45deg)}
+.menubtn[aria-expanded=true] span::after{top:0;transform:rotate(-45deg)}
+.logo{position:fixed;z-index:30;top:max(22px,calc(env(safe-area-inset-top,0px) + 8px));left:20px;font-size:13px;text-decoration:none;color:inherit}
+nav#nav{position:fixed;inset:0;z-index:25;background:rgba(11,16,32,.97);color:#efe7d6;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+nav#nav.open{opacity:1;visibility:visible}
+nav#nav a{text-decoration:none;font-size:20px;letter-spacing:.2em;padding:8px 20px;display:block;text-align:center}
+nav#nav a small{display:block;font-size:12px;color:var(--gold);letter-spacing:.3em}
+nav#nav a:focus-visible,.btn:focus-visible,.menubtn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* hero */
+.hero{height:100svh;min-height:560px;padding:0;color:#efe7d6;background:linear-gradient(#0b1020 0%,#161c36 55%,#2b2742 80%,#5a4a46 100%);overflow:hidden;display:grid;place-items:center}
+.arch{position:absolute;left:50%;bottom:0;width:min(62vw,420px);aspect-ratio:3/4.4;transform:translateX(-50%);border-radius:999px 999px 0 0;background:radial-gradient(ellipse at 50% 70%,#fff2cf 0%,#e8c98a 28%,rgba(201,169,106,.35) 60%,transparent 80%);box-shadow:0 0 120px 30px rgba(232,201,138,.25);opacity:0;animation:rise 3.2s .4s forwards cubic-bezier(.2,.7,.2,1)}
+.arch::after{content:"";position:absolute;inset:-3px;border-radius:inherit;border:1px solid rgba(239,231,214,.45)}
+.arch i{position:absolute;left:50%;top:6%;bottom:0;width:1px;background:rgba(11,16,32,.35)}
+.arch b{position:absolute;left:8%;right:8%;top:38%;height:1px;background:rgba(11,16,32,.3)}
+@keyframes rise{from{opacity:0;transform:translateX(-50%) translateY(40px)}to{opacity:1;transform:translateX(-50%)}}
+.floor{position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(transparent,#0b1020 90%)}
+.lights{position:absolute;inset:0}
+.lights i{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffe3a3;box-shadow:0 0 10px 4px rgba(255,214,130,.55);opacity:0;animation:on 2.2s forwards,fl 3.4s infinite ease-in-out}
+@keyframes on{to{opacity:1}}
+@keyframes fl{50%{transform:scale(1.5);filter:brightness(1.25)}}
+.hero .copy{position:relative;z-index:2;text-align:center;padding:0 24px;margin-top:-14vh}
+.hero h1{margin:0;font-weight:400;font-size:clamp(34px,8vw,84px);letter-spacing:.32em;text-indent:.32em;opacity:0;animation:fade 2.4s 1.6s forwards}
+.hero .jp{display:block;font-size:clamp(14px,2.4vw,20px);letter-spacing:.6em;text-indent:.6em;margin-top:6px;opacity:0;animation:fade 2.4s 2.1s forwards}
+.hero .catch{margin:34px auto 0;font-size:clamp(15px,2.6vw,20px);letter-spacing:.3em;line-height:2.2;opacity:0;animation:fade 2.4s 2.8s forwards}
+@keyframes fade{from{opacity:0;letter-spacing:.7em}to{opacity:1}}
+.scrollcue{position:absolute;bottom:22px;left:50%;width:1px;height:48px;background:linear-gradient(var(--gold),transparent);opacity:0;animation:fade 2s 3.6s forwards}
+.hero{display:block;background:#0b1020}
+.himg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;animation:zoom 14s ease-out both,fadeimg 2.2s both}
+@keyframes zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@keyframes fadeimg{from{opacity:0}to{opacity:1}}
+.shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,16,32,.88) 0%,rgba(11,16,32,.5) 30%,transparent 58%),linear-gradient(to bottom,rgba(11,16,32,.4),transparent 20%)}
+.hero .copy{position:absolute;left:0;right:0;bottom:11vh;margin:0;text-shadow:0 2px 24px rgba(0,0,0,.55)}
+.hero .catch{margin-top:22px}
+@media(min-width:900px){.himg{object-position:68% 55%}.shade{background:linear-gradient(to top,rgba(11,16,32,.7),transparent 45%),linear-gradient(to right,rgba(11,16,32,.65),transparent 58%),linear-gradient(to bottom,rgba(11,16,32,.4),transparent 20%)}.hero .copy{text-align:left;left:7vw;right:auto;bottom:12vh}.hero h1{text-indent:0}.hero .jp{text-indent:0}}
+/* photo slots */
+.ph{position:relative;overflow:hidden;background:#1a2038;background-size:cover;background-position:center;min-height:260px}
+.ph::before{content:"";position:absolute;inset:0;background:var(--art);opacity:1;transition:transform 1.6s}
+.ph:hover::before{transform:scale(1.04)}
+.ph.has::before{opacity:0}
+.ph span{position:absolute;left:14px;bottom:10px;font-size:11px;color:rgba(239,231,214,.75);letter-spacing:.12em}
+.a1{--art:radial-gradient(ellipse at 50% 80%,rgba(255,226,160,.9),transparent 50%),linear-gradient(#e9e2d3,#b7b3b0)}
+.a2{--art:radial-gradient(circle at 70% 30%,rgba(255,170,110,.8),transparent 45%),linear-gradient(#6a5a7a,#d49a7a)}
+.a3{--art:radial-gradient(circle at 30% 70%,rgba(255,214,130,.8),transparent 35%),radial-gradient(circle at 70% 60%,rgba(255,214,130,.6),transparent 30%),linear-gradient(#111830,#0b1020)}
+.a4{--art:linear-gradient(120deg,#cfd7d8,#8fa2a8 60%,#4c6068)}
+.a5{--art:radial-gradient(circle at 50% 40%,#f4e3c2,transparent 45%),linear-gradient(#2b2742,#161c36)}
+.a6{--art:radial-gradient(circle at 40% 50%,#d8b77a,transparent 40%),linear-gradient(#3a2e2a,#171320)}
+.split{display:grid;gap:40px;align-items:center}
+@media(min-width:820px){.split{grid-template-columns:1fr 1fr;gap:80px}.split.rev .ph{order:2}}
+.split .ph{aspect-ratio:4/5}
+/* hours */
+.hours{display:grid;gap:18px;margin-top:48px}
+@media(min-width:820px){.hours{grid-template-columns:repeat(3,1fr)}}
+.hour{border-top:1px solid var(--line);padding-top:18px}
+.hour .en{font-size:30px;margin:0;font-weight:300}
+.hour .ph{aspect-ratio:3/2;min-height:0;margin:14px 0}
+/* space list */
+.space{display:grid;gap:56px;margin-top:56px}
+.space h3{font-weight:400;font-size:22px;letter-spacing:.14em;margin:0 0 6px}
+/* plan */
+.plan{border:1px solid var(--line);padding:40px 28px;max-width:640px}
+.plan dl{margin:24px 0;display:grid;grid-template-columns:auto 1fr;gap:10px 24px}
+.plan dt{color:var(--sub)}.plan dd{margin:0}
+.btn{display:inline-block;border:1px solid var(--gold);color:inherit;background:transparent;font:inherit;letter-spacing:.2em;padding:14px 32px;cursor:pointer;text-decoration:none;transition:.5s}
+.btn:hover{background:var(--gold);color:#0b1020}
+.voice{font-size:clamp(18px,3vw,26px);line-height:2.2;max-width:22em;letter-spacing:.08em}
+dialog{border:1px solid var(--gold);background:#0b1020;color:#efe7d6;padding:36px 28px;max-width:440px;width:calc(100% - 40px)}
+dialog::backdrop{background:rgba(5,8,18,.7)}
+footer{padding:80px 0 60px;background:#080c18;color:#cfc7b6;font-size:13px}
+footer p{max-width:44em}
+.demo{border:1px solid var(--gold);padding:14px 18px;color:#efe7d6}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity 1.4s ease,transform 1.4s ease}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;transition:none!important}.js .rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+body{font-size:16px;transition:color .6s}
+section{padding:92px 0}
+@media(min-width:820px){section{padding:132px 0}}
+.sub{font-size:15.5px}
+.center{text-align:center}.center p{margin-left:auto;margin-right:auto}
+.menubtn{background:rgba(11,16,32,.55);color:#efe7d6;border-color:rgba(239,231,214,.4);width:48px;height:48px}
+.logo{opacity:0;pointer-events:none;transition:opacity .5s,color .5s}.onhero .logo{opacity:1;pointer-events:auto;color:#efe7d6;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.ph{margin:0;min-height:0;aspect-ratio:4/5;background:#1a2038}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%);z-index:1;transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+.ph:hover img{transform:scale(1.03)}
+.ph figcaption{position:absolute;right:12px;bottom:9px;z-index:2;font-size:12px;letter-spacing:.08em;color:#efe7d6;text-shadow:0 1px 6px rgba(0,0,0,.75)}
+.split .ph{aspect-ratio:4/5}.split.wide .ph{aspect-ratio:4/3}
+.hour .ph{aspect-ratio:4/3;margin:16px 0}
+@media(min-width:820px){.hour .ph{aspect-ratio:4/5}}
+.hour .en{font-size:32px}
+.space{gap:72px}
+.space h3{font-size:24px}
+.plan{max-width:560px;margin:0 auto;padding:56px 28px 44px;border:1px solid var(--gold);outline:1px solid var(--line);outline-offset:8px;text-align:center}
+.plan .pt{font-size:28px;margin:0 auto 24px}
+.plist{list-style:none;margin:0 0 20px;padding:0;text-align:left}
+.plist li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.plist li:first-child{border-top:1px solid var(--line)}
+.plist span{color:var(--sub)}.plist b{font-weight:400;text-align:right}
+.note{font-size:13px;color:var(--sub);margin:0 auto}
+.voice{font-size:clamp(19px,3.2vw,26px);line-height:2.3;max-width:22em;margin:0 auto 18px;letter-spacing:.08em;position:relative;padding-top:48px}
+.voice::before{content:"\201C";position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-family:"Cormorant Garamond",serif;font-size:72px;line-height:1;color:var(--gold)}
+.btn{min-height:48px;margin-top:8px}
+footer{font-size:14px}
+@media(min-width:900px){.hero h1{font-size:clamp(40px,4.5vw,66px)}.hero .jp{font-size:clamp(15px,1.5vw,20px)}.hero .catch{margin-left:0;margin-right:0;font-size:clamp(15px,1.5vw,20px)}}
+@media(min-width:820px){#cuisine .split>div:first-child{order:2}}
+
+.k{display:inline-block}.l{display:block}
+body{line-break:strict}
+h2,.voice{text-wrap:balance}p,.sub,.note{text-wrap:pretty}
+p{line-height:1.95}
+section{padding:60px 0}
+#concept{padding-top:88px}#visit{padding-bottom:96px}
+.hours{margin-top:36px}.space{gap:56px;margin-top:40px}
+@media(min-width:820px){section{padding:84px 0}#concept{padding-top:120px}#visit{padding-bottom:120px}.hours{margin-top:48px}.space{gap:72px;margin-top:56px}}
+.voice{font-size:clamp(18px,3vw,26px);max-width:20em;line-height:2.2}
+.voice .s{display:block}.voice .s+.s{margin-top:.5em}
+@media(max-width:420px){.hero h1{font-size:30px}}
+.ph figcaption{background:rgba(11,16,32,.5);padding:2px 9px;border-radius:2px}
+</style>
+</head>
+<body>
+<div id="sky"></div>
+<a class="logo en" href="#top">LUMEN HALL</a>
+<button class="menubtn" id="mb" aria-expanded="false" aria-controls="nav" aria-label="メニューを開く"><span></span></button>
+<nav id="nav" aria-label="メインメニュー">
+<a href="#concept">コンセプト<small class="en">Concept</small></a>
+<a href="#hours">三つの時間<small class="en">The Hours</small></a>
+<a href="#space">空間<small class="en">Space</small></a>
+<a href="#cuisine">お料理<small class="en">Cuisine</small></a>
+<a href="#plan">プラン<small class="en">Plan</small></a>
+<a href="#voice">ふたりの声<small class="en">Story</small></a>
+<a href="#visit">見学のご案内<small class="en">Visit</small></a>
+</nav>
+
+<header class="hero" id="top">
+<picture><source media="(max-width:700px)" srcset="images/hero-sp.jpg"><img class="himg" src="images/hero.jpg" alt="夕暮れの山を背に、窓に灯りがともる石造りの礼拝堂" width="1672" height="941" fetchpriority="high"></picture>
+<div class="shade"></div>
+<div class="copy">
+<h1 class="en">LUMEN HALL</h1>
+<span class="jp">灯の礼拝堂</span>
+<p class="catch"><span class="l">ひとつの灯から、</span><span class="l">ふたりの日々へ。</span></p>
+</div>
+<div class="scrollcue"></div>
+</header>
+
+<main>
+<section id="concept"><div class="wrap split">
+<div class="rv"><figure class="ph a1" style="--pos:50% 50%"><img src="images/01_concept_interior.jpg" alt="山並みを望む大きな窓と、灯りがともる石造りの礼拝堂の内部" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure></div>
+<div class="rv">
+<p class="en gold">Concept</p>
+<h2><span class="k">結婚式は、</span><span class="k">灯りをともす儀式。</span></h2>
+<p><span class="k">信州の高原に残る、</span><span class="k">百年前の石の蔵。</span><span class="k">いまは一日一組のためだけに</span><span class="k">扉を開く、</span><span class="k">小さな礼拝堂です。</span></p>
+<p class="sub"><span class="k">昼は白い光が壁をなで、</span><span class="k">日が落ちると</span><span class="k">数百の灯りがともります。</span><span class="k">光が変わるたび、</span><span class="k">ふたりの表情も変わる。</span><span class="k">その移ろいごと、</span><span class="k">一日を設えます。</span></p>
+</div></div></section>
+
+<section id="hours"><div class="wrap">
+<div class="rv"><p class="en gold">The Hours</p><h2><span class="k">光が移ろう、</span><span class="k">三つの時間。</span></h2></div>
+<div class="hours">
+<div class="hour rv"><p class="en">Day</p><figure class="ph a1" style="--pos:78% 50%"><img src="images/02_hours_day.jpg" alt="青空の下、新緑と山並みに包まれた昼の礼拝堂" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure><p class="sub"><span class="k">昼 ―</span> <span class="k">誓いのとき。</span><span class="k">高窓から白い光が降り、</span><span class="k">石の床に影が伸びます。</span></p></div>
+<div class="hour rv"><p class="en">Dusk</p><figure class="ph a2" style="--pos:60% 50%"><img src="images/03_hours_dusk.jpg" alt="夕焼けの庭で礼拝堂へ向かう、ウェディングドレス姿のふたり" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure><p class="sub"><span class="k">夕暮れ ―</span> <span class="k">空が色を変える</span><span class="k">十数分を、</span><span class="k">ふたりと皆さまのために。</span></p></div>
+<div class="hour rv"><p class="en">Night</p><figure class="ph a3" style="--pos:90% 50%"><img src="images/04_hours_night.jpg" alt="月と星の下、灯りに包まれる夜の礼拝堂と水の庭" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure><p class="sub"><span class="k">夜 ―</span> <span class="k">数百の灯がともり、</span><span class="k">宴はいちばん静かで</span><span class="k">美しい時間へ。</span></p></div>
+</div></div></section>
+
+<section id="space"><div class="wrap">
+<div class="rv"><p class="en gold">Space</p><h2><span class="k">石と木と水の、</span><span class="k">三つの場所。</span></h2></div>
+<div class="space">
+<div class="split wide rv"><figure class="ph a1" style="--pos:50% 50%"><img src="images/05_space_chapel.jpg" alt="白い花と灯りで飾られた礼拝堂のバージンロード" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure><div><h3>礼拝堂</h3><p class="sub"><span class="k">天井まで十メートル。</span><span class="k">石壁に反響する声が、</span><span class="k">誓いの言葉を</span><span class="k">やわらかく包みます。</span></p></div></div>
+<div class="split wide rev rv"><figure class="ph a4" style="--pos:42% 50%"><img src="images/06_space_water_garden.jpg" alt="夕暮れの空の下、小さな滝と水面に灯りが映る水の庭" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure><div><h3>水の庭</h3><p class="sub"><span class="k">空と灯りを映す、</span><span class="k">浅い水の庭。</span><span class="k">夕暮れの乾杯はここで。</span></p></div></div>
+<div class="split wide rv"><figure class="ph a5" style="--pos:50% 50%"><img src="images/07_space_corridor.jpg" alt="アーチと灯りが続く石の回廊" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure><div><h3>灯りの回廊</h3><p class="sub"><span class="k">礼拝堂から会食の間へ続く</span><span class="k">石の回廊。</span><span class="k">歩く道すべてが、</span><span class="k">ふたりへの祝福の道になります。</span></p></div></div>
+</div></div></section>
+
+<section id="cuisine"><div class="wrap split rev">
+<div class="rv"><figure class="ph a6" style="--pos:46% 50%"><img src="images/08_cuisine.jpg" alt="白い皿に盛られた牛フィレ肉の一皿と、花とキャンドルのテーブル" width="1400" height="788" loading="lazy" decoding="async"><figcaption>AI生成イメージ</figcaption></figure></div>
+<div class="rv"><p class="en gold">Cuisine</p><h2><span class="k">山と畑の、</span><span class="k">季節をそのまま。</span></h2>
+<p><span class="k">近隣の畑と山で採れたものを、</span><span class="k">その日いちばんおいしい形で。</span><span class="k">器と花は、</span><span class="k">季節の野の草木で整えます。</span></p>
+<p class="sub"><span class="k">料理は灯りの下で映えるよう、</span><span class="k">色と温度まで設計しています。</span></p></div>
+</div></section>
+
+<section id="plan"><div class="wrap center">
+<div class="rv"><p class="en gold">Plan</p><h2><span class="k">一日一組の、</span><span class="k">貸切。</span></h2></div>
+<div class="plan rv"><p class="en pt">The Single Day</p>
+<ul class="plist"><li><span>ご利用</span><b>一日一組・貸切</b></li><li><span>人数</span><b>20〜60名(架空の設定)</b></li><li><span>時間</span><b>夕暮れ前から夜まで</b></li><li><span>料金</span><b>デモのため掲載しません</b></li></ul>
+<p class="note"><span class="k">プランの内容は</span><span class="k">すべて架空の設定です。</span></p></div>
+</div></section>
+
+<section id="voice"><div class="wrap center">
+<div class="rv"><p class="en gold">Story</p><h2>ふたりの声。</h2>
+<p class="voice"><span class="s"><span class="k">灯りがひとつずつ</span><span class="k">増えていくのを、</span><span class="k">両親と並んで</span><span class="k">見ていました。</span></span><span class="s"><span class="k">あの静けさを、</span><span class="k">いまも思い出します。</span></span></p>
+<p class="note"><span class="k">※この声は、</span><span class="k">制作デモのために書かれた</span><span class="k">架空のものです。</span></p></div></div></section>
+
+<section id="visit"><div class="wrap center">
+<div class="rv"><p class="en gold">Visit</p><h2>見学のご案内。</h2>
+<p class="sub"><span class="k">これは制作デモのため、</span><span class="k">実際の見学・予約・</span><span class="k">お問い合わせは</span><span class="k">受け付けていません。</span></p>
+<button class="btn" id="open" type="button">見学について</button></div></div></section>
+</main>
+
+<footer><div class="wrap">
+<p class="demo"><span class="k">Lumi Designによる</span><span class="k">架空のウェディング会場の</span><span class="k">制作デモです。</span><span class="k">実在する会場・団体とは一切関係がなく、</span><span class="k">予約・見学申込み・</span><span class="k">お問い合わせは</span><span class="k">できません。</span></p>
+<p class="en" style="letter-spacing:.2em">LUMEN HALL ― 灯の礼拝堂</p>
+<p><span class="k">画像について:</span><span class="k">このサイトの画像はすべて、</span><span class="k">Lumi Designが用意した</span><span class="k">AI生成のイメージです。</span><span class="k">実在する会場の写真ではありません。</span></p>
+<p class="en" style="letter-spacing:.2em">© Lumi Design</p>
+</div></footer>
+
+<dialog id="dlg"><p class="en gold" style="margin:0">Demo</p>
+<p><span class="k">このサイトは架空のデモです。</span><span class="k">見学のお申込みや</span><span class="k">お問い合わせの窓口はありません。</span></p>
+<button class="btn" id="close">閉じる</button></dialog>
+
+<script>
+(function(){
+var d=document;d.documentElement.className+=" js";var sky=d.getElementById('sky'),root=d.body;
+/* menu */
+var mb=d.getElementById('mb'),nav=d.getElementById('nav');
+function tog(o){nav.classList.toggle('open',o);mb.setAttribute('aria-expanded',o);mb.setAttribute('aria-label',o?'メニューを閉じる':'メニューを開く');d.documentElement.style.overflow=o?'hidden':'';}
+mb.onclick=function(){tog(!nav.classList.contains('open'))};
+nav.querySelectorAll('a').forEach(function(a){a.onclick=function(){tog(false)}});
+d.addEventListener('keydown',function(e){if(e.key==='Escape')tog(false)});
+/* dialog */
+var dlg=d.getElementById('dlg');
+d.getElementById('open').onclick=function(){dlg.showModal?dlg.showModal():dlg.setAttribute('open','')};
+d.getElementById('close').onclick=function(){dlg.close?dlg.close():dlg.removeAttribute('open')};
+/* day -> dusk -> night */
+var S=[[0,[243,238,228]],[.3,[224,192,174]],[.62,[44,42,76]],[1,[11,16,32]]];
+function mix(a,b,t){return a.map(function(v,i){return Math.round(v+(b[i]-v)*t)})}
+function upd(){
+var H=d.documentElement,max=H.scrollHeight-innerHeight,p=max>0?Math.min(1,Math.max(0,(scrollY-innerHeight*.6)/(max-innerHeight*.6))):0;
+var i=p<S[1][0]?0:(p<S[2][0]?1:2),a=S[i],b=S[i+1],t=(p-a[0])/(b[0]-a[0]);
+var bg=mix(a[1],b[1],t),lum=(.299*bg[0]+.587*bg[1]+.114*bg[2])/255,light=lum>.5,fg=light?[28,34,51]:[239,231,214];
+var s=root.style;s.setProperty('--bg','rgb('+bg+')');s.setProperty('--fg','rgb('+fg+')');
+s.setProperty('--sub','rgba('+fg+',.8)');s.setProperty('--line','rgba('+fg+',.25)');s.setProperty('--gold',light?'#85632a':'#d4b57a');
+root.classList.toggle('onhero',scrollY<innerHeight*.85);sky.style.opacity=p;}
+addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+/* reveal */
+var els=[].slice.call(d.querySelectorAll('.rv'));
+function chk(){els.forEach(function(e){if(!e.classList.contains('in')&&e.getBoundingClientRect().top<innerHeight*.92)e.classList.add('in')})}
+addEventListener('scroll',chk,{passive:true});addEventListener('resize',chk);addEventListener('load',chk);setInterval(chk,500);chk();
+})();
+</script>
+</body>
+</html>
